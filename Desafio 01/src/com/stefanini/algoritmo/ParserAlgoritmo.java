@@ -10,54 +10,52 @@ import com.stefanini.modelo.Input;
 import com.stefanini.modelo.Item;
 import com.stefanini.modelo.TipoArquivo;
 
-public class ParserAlgoritmo implements IAlgoritmo {
+public class ParserAlgoritmo implements IAlgoritmo<Input> {
 
-	private String SEPARADORGRUPOITENS = "\\[(.*?)\\]";
 	@Override
 	public Collection<Input> Executar(String conteudo) {
-		
+
 		Collection<Input> resultado = new ArrayList<Input>();
-		for(String linha : conteudo.split(System.lineSeparator())){
+		for (String linha : conteudo.split(System.lineSeparator())) {
 			Input in = new Input();
 			TipoArquivo tipo = GerarTipo(linha);
-			
-			if(tipo == TipoArquivo.Sales) {
+
+			if (tipo == TipoArquivo.Sales) {
 				in.setItens(GerarItens(linha));
 			}
-			
+
 			in.setTipo(GerarTipo(linha));
 			in.setDocumentoIdentificador(GerarDocumentoIdentificador(linha));
 			in.setNome(GerarNome(linha));
 			resultado.add(in);
 		}
-		
+
 		return resultado;
 	}
 
 	private Collection<Item> GerarItens(String linha) {
-		
+
 		Collection<Item> resultado = new ArrayList<Item>();
-		Pattern p = Pattern.compile(SEPARADORGRUPOITENS);
-		Matcher m = p.matcher(linha);
-		String itens = m.group(0);
-		
-		for(String iten : itens.split(",")) {
-			
+		String itens = linha.split("\\[")[1];
+		itens = itens.split("]")[0];
+
+		for (String iten : itens.split(",")) {
+
 			String[] campos = iten.split("-");
 			Item i = new Item();
-			i.setId(Integer.parseInt(campos[0].substring(1, campos[0].length())));
+			i.setId(Integer.parseInt(campos[0]));
 			i.setQuantidade(Integer.parseInt(campos[1]));
 			i.setPreco(new BigDecimal(campos[2]));
-			
+
 			resultado.add(i);
 		}
-		
+
 		return resultado;
 	}
 
 	private TipoArquivo GerarTipo(String linha) {
 		int pos = Integer.parseInt(linha.split("ç")[0]);
-		return TipoArquivo.values()[pos-1];
+		return TipoArquivo.values()[pos - 1];
 	}
 
 	private String GerarNome(String linha) {

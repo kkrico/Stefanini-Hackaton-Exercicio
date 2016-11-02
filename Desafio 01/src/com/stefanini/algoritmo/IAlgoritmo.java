@@ -2,7 +2,7 @@ package com.stefanini.algoritmo;
 
 import java.util.Collection;
 
-public interface IAlgoritmo {
+public interface IAlgoritmo<T> {
 
-	<T> Collection<T> Executar(String conteudo);
+	Collection<T> Executar(String conteudo);
 }

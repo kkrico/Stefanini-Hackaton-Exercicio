@@ -3,12 +3,12 @@ package com.stefanini.modelo;
 import java.util.Collection;
 
 public class Input {
-	
+
 	private String documentoIdentificador;
 	private String nome;
 	private TipoArquivo tipo;
 	private Collection<Item> itens;
-	
+
 	public String getNome() {
 		return nome;
 	}

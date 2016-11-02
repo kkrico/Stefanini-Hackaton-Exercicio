@@ -10,11 +10,11 @@ public class LogReader {
 	public static String LerArquivos(String local) throws IOException {
 
 		File dir = new File(local);
-		
+
 		StringBuilder sb = new StringBuilder();
 		for (File file : dir.listFiles()) {
-			
-			if(file.isFile()) {
+
+			if (file.isFile()) {
 				String conteudo = LerConteudoArquivo(file);
 				sb.append(conteudo);
 			}
@@ -25,15 +25,15 @@ public class LogReader {
 	private static String LerConteudoArquivo(File file) throws IOException {
 		BufferedReader br = new BufferedReader(new FileReader(file.getAbsolutePath()));
 		StringBuilder sb = new StringBuilder();
-	    String line = br.readLine();
+		String line = br.readLine();
 
-	    while (line != null) {
-	        sb.append(line);
-	        sb.append(System.lineSeparator());
-	        line = br.readLine();
-	    }
-	    
-	    br.close();
-	    return sb.toString();
+		while (line != null) {
+			sb.append(line);
+			sb.append(System.lineSeparator());
+			line = br.readLine();
+		}
+
+		br.close();
+		return sb.toString();
 	}
 }
